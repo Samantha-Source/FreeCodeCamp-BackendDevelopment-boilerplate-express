@@ -22,7 +22,10 @@ app.route('/name').get((req, res, next) => {
     res.send({ name: `${firstName} ${lastName}`});
     next();
 }).post((req, res, next) => {
-
+    const firstName = req.body.first;
+    const lastName = req.body.last;
+    res.send({ name: `${firstName} ${lastName}`});
+    next();
 })
 
 function logger(req, res, next) {
