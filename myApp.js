@@ -4,8 +4,8 @@ require('dotenv').config();
 
 app.use(logger);
 app.use('/public', express.static(__dirname + '/public'));
-app.get("/", get);
-app.get("/json", getJson);
+app.get('/', get);
+app.get('/json', getJson);
 app.get('/now', (req, res, next) => {
     req.time = new Date().toString();
     next();
@@ -13,6 +13,12 @@ app.get('/now', (req, res, next) => {
     res.send({ time: req.time });
 })
 app.get('/:word/echo', echoServer);
+app.get('/name', (req, res, next) => {
+    const firstName = req.query.first;
+    const lastName = req.query.last;
+    res.send({ name: `${firstName} ${lastName}`});
+    next();
+})
 
 function logger(req, res, next) {
     console.log(`${req.method} ${req.path} - ${req.ip}`);
