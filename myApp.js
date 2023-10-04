@@ -1,7 +1,10 @@
 let express = require('express');
 let app = express();
 require('dotenv').config();
+let bodyParser = require('body-parser');
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(logger);
 app.use('/public', express.static(__dirname + '/public'));
 app.get('/', get);
@@ -13,11 +16,13 @@ app.get('/now', (req, res, next) => {
     res.send({ time: req.time });
 })
 app.get('/:word/echo', echoServer);
-app.get('/name', (req, res, next) => {
+app.route('/name').get((req, res, next) => {
     const firstName = req.query.first;
     const lastName = req.query.last;
     res.send({ name: `${firstName} ${lastName}`});
     next();
+}).post((req, res, next) => {
+
 })
 
 function logger(req, res, next) {
