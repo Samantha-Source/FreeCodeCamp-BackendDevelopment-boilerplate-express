@@ -6,6 +6,12 @@ app.use(logger);
 app.use('/public', express.static(__dirname + '/public'));
 app.get("/", get);
 app.get("/json", getJson);
+app.get('/now', (req, res, next) => {
+    req.time = new Date().toString();
+    next();
+}, (req, res) => {
+    res.send({ time: req.time });
+})
 
 function logger(req, res, next) {
     console.log(`${req.method} ${req.path} - ${req.ip}`);
