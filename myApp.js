@@ -12,12 +12,12 @@ app.get('/now', (req, res, next) => {
 }, (req, res) => {
     res.send({ time: req.time });
 })
+app.get('/:word/echo', echoServer);
 
 function logger(req, res, next) {
     console.log(`${req.method} ${req.path} - ${req.ip}`);
     next();
 }
-
 
 function get(req, res) {
     // res.send('Hello Express');
@@ -32,6 +32,11 @@ function getJson(req, res) {
     };
 
     res.json({ "message": message });
+}
+
+function echoServer(req, res, next) {
+    const inputWord = req.params.word;
+    res.send({ echo: inputWord });
 }
 
 console.log("Hello World");
